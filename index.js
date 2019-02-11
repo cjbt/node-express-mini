@@ -38,6 +38,24 @@ server.get('/api/users', (req, res) => {
     });
 });
 
+server.get('/api/users/:id', (req, res) => {
+  const userId = req.params.id;
+  db.findById(userId)
+    .then(user => {
+      if (!user) {
+        res
+          .status(404)
+          .json({ message: 'the user with the specified ID does not exist.' });
+      }
+      res.status(200).json({ success: true, user });
+    })
+    .catch(() => {
+      res
+        .status(500)
+        .json({ error: 'The user information could not be retrieved.' });
+    });
+});
+
 server.listen(3333, () => {
   console.log('Listening to port 3333');
 });
