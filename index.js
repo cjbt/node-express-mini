@@ -18,7 +18,18 @@ server.post('/api/users', (req, res) => {
           message: 'Please provide name and bio for the user.'
         });
       } else {
-        res.status(201).json({ success: true, user });
+        db.find()
+          .then(user => {
+            res.status(201).json({ success: true, user });
+          })
+          .catch(() => {
+            res
+              .status(500)
+              .json({
+                error:
+                  'There was an error while saving the user to the database'
+              });
+          });
       }
     })
     .catch(() => {
