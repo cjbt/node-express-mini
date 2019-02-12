@@ -2,7 +2,9 @@
 const express = require('express');
 const db = require('./data/db');
 const server = express();
+const cors = require('cors');
 
+server.use(cors());
 server.use(express.json());
 
 server.post('/api/users', (req, res) => {
